@@ -1,4 +1,4 @@
-package com.versed.rl_trainer_svc.user;
+package com.versed.rl_trainer_svc.service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -6,6 +6,11 @@ import java.time.Instant;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.versed.rl_trainer_svc.model.Points;
+import com.versed.rl_trainer_svc.model.User;
+import com.versed.rl_trainer_svc.repository.PointsRepository;
+import com.versed.rl_trainer_svc.repository.UserRepository;
 
 @Service
 public class UserService {

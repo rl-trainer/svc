@@ -1,4 +1,4 @@
-package com.versed.rl_trainer_svc.user;
+package com.versed.rl_trainer_svc.model;
 
 import java.time.Instant;
 

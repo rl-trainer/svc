@@ -11,8 +11,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import com.versed.rl_trainer_svc.user.User;
-import com.versed.rl_trainer_svc.user.UserService;
+import com.versed.rl_trainer_svc.model.User;
+import com.versed.rl_trainer_svc.service.UserService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
