@@ -19,9 +19,9 @@ public class Points {
     private User user;
 
     @Id
-    private long userId;
+    private Long userId;
 
-    private long balance;
+    private Long balance;
 
     private BigDecimal multiplier;
 
@@ -33,19 +33,19 @@ public class Points {
         this.user = user;
     }
 
-    public long getUserId() {
+    public Long getUserId() {
         return this.userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getBalance() {
+    public Long getBalance() {
         return this.balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(Long balance) {
         this.balance = balance;
     }
 

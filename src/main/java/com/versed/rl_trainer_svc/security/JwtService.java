@@ -25,16 +25,16 @@ public class JwtService {
     private static final String ACCESS_TOKEN_NAME = "access_token";
 
     private final SecretKey key;
-    private final long expirationMs;
+    private final Long expirationMs;
 
     public JwtService(
             @Value("${security.jwt.secret}") String secret,
-            @Value("${security.jwt.expiration-ms}") long expirationMs) {
+            @Value("${security.jwt.expiration-ms}") Long expirationMs) {
         this.key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(long userId) {
+    public String generateToken(Long userId) {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + expirationMs);
 
@@ -60,7 +60,7 @@ public class JwtService {
         }
     }
 
-    public long getExpirationMs(){
+    public Long getExpirationMs(){
         return this.expirationMs;
     }
 
