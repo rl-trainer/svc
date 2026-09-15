@@ -1,7 +1,6 @@
 package com.versed.rl_trainer_svc.security;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +21,14 @@ import jakarta.servlet.http.HttpServletResponse;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler{
     
     private final JwtService jwt;
-    private final boolean secureCookie;
     private final String frontEndURL;
     private final UserService userService;
+    private final AuthCookieService authCookieService;
 
-    public OAuth2LoginSuccessHandler(JwtService jwt,@Value("${security.cookie.secure}") boolean secureCookie,
-     @Value("${app.frontend-url}") String frontEndURL, UserService userService){
+    public OAuth2LoginSuccessHandler(JwtService jwt, @Value("${app.frontend-url}") String frontEndURL,
+     UserService userService, AuthCookieService authCookieService){
         this.jwt = jwt;
-        this.secureCookie = secureCookie;
+        this.authCookieService = authCookieService;
         this.frontEndURL = frontEndURL;
         this.userService = userService;
     }
@@ -40,14 +39,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler{
             OidcUser oidcUser  = (OidcUser) authentication.getPrincipal();
             User appUser = userService.findOrCreateFromGoogle(oidcUser);
             String jwtToken = jwt.generateToken(appUser.getId());
-            ResponseCookie cookie = ResponseCookie.from(jwt.getAccessTokenName(), jwtToken)
-                                    .httpOnly(true)
-                                    .sameSite("Lax")
-                                    .path("/")
-                                    .maxAge(Duration.ofMillis(jwt.getExpirationMs()))
-                                    .secure(secureCookie)
-                                    .build();
-            
+            ResponseCookie cookie = authCookieService.createAccessTokenCookie(jwtToken);
             response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
             response.sendRedirect(this.frontEndURL);
     }
